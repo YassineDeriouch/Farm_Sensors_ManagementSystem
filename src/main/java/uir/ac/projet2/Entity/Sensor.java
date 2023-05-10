@@ -19,7 +19,7 @@ import java.sql.Date;
 public class Sensor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSensor;
 
     @Column(name = "unit")
@@ -33,5 +33,10 @@ public class Sensor {
 
     @Column(name = "value")
     private double Value;
+
+    @ManyToOne
+    @JoinColumn(name = "idCateg")
+    private SensorCategory sensorCategory;
+
 
 }

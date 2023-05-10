@@ -1,37 +1,42 @@
-package uir.ac.projet2.Entity;
+    package uir.ac.projet2.Entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+    import jakarta.persistence.*;
+    import lombok.Data;
 
-/**
- * Created By Youssef on 10/05/2023
- *
- * @Author : Youssef
- * @Date : 10/05/2023
- * @Project : projet2
- */
+    import java.util.List;
 
-@Entity
-@Data
-@Table(name = "user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUser;
+    /**
+     * Created By Youssef on 10/05/2023
+     *
+     * @Author : Youssef
+     * @Date : 10/05/2023
+     * @Project : projet2
+     */
 
-    @Column(name = "name")
-    private String name;
+    @Entity
+    @Data
+    @Table(name = "user")
+    public class User {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int idUser;
 
-    @Column(name = "email")
-    private String Email;
+        @Column(name = "name")
+        private String name;
 
-    @Column(name = "phone")
-    private String Phone;
+        @Column(name = "email")
+        private String Email;
 
-    @Column(name = "login")
-    private String Login;
+        @Column(name = "phone")
+        private String Phone;
 
-    @Column(name = "password")
-    private String Password;
+        @Column(name = "login")
+        private String Login;
 
-}
+        @Column(name = "password")
+        private String Password;
+
+        @OneToMany(mappedBy = "user")
+        private List<User_Farm_Link> userFarms;
+
+    }
