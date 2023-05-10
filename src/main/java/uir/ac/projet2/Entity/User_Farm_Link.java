@@ -18,6 +18,7 @@ public class User_Farm_Link {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+
         private Long id;
 
         @ManyToOne
