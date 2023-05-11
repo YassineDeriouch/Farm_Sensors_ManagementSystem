@@ -84,7 +84,6 @@ public class SensorController {
 
     /**
      * GET ALL SENSOR
-     *
      * @return
      */
     @GetMapping("/get/all")
