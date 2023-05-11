@@ -1,5 +1,6 @@
 package uir.ac.projet2.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -40,10 +41,11 @@ public class Farm {
     @Column(name = "description")
     private String Description;
 
-    @OneToMany
-    @JoinColumn(name = "idSensor")
-    private List<Sensor> SensorList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idFarm")
+    private List<Sensor> sensorList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "farm")
     private List<User_Farm_Link> userFarms;
 

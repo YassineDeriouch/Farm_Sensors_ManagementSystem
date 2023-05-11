@@ -1,7 +1,9 @@
 package uir.ac.projet2.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Date;
 
@@ -20,6 +22,7 @@ public class Sensor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idSensor")
     private int idSensor;
 
     @Column(name = "unit")
@@ -29,10 +32,16 @@ public class Sensor {
     private double Frequency;
 
     @Column(name = "timestamp")
+    @CreatedDate
     private Date Timestamp;
 
     @Column(name = "value")
     private double Value;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "idFarm")
+    private Farm farm;
 
     @ManyToOne
     @JoinColumn(name = "idCateg")
