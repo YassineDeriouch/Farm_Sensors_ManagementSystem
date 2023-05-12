@@ -19,6 +19,7 @@ import java.util.List;
  * @Project : projet2
  */
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("Farms")
 public class FarmController {
