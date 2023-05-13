@@ -28,8 +28,8 @@ public class Sensor {
     @Column(name = "unit")
     private String Unit;
 
-    @Column(name = "name")
-    private String Name;
+    @Column(name = "sensorName")
+    private String sensorName;
 
     @Column(name = "frequency")
     private double Frequency;

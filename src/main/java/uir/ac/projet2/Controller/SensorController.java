@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import uir.ac.projet2.Entity.Sensor;
 import uir.ac.projet2.Service.SensorService;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
  * @author Yassine
  * @project Sensor_Sensors_ManagementSystem
  */
-
+@CrossOrigin(origins = "*")
 @RestController
 @Data
 @RequestMapping("Sensors")
@@ -24,6 +25,7 @@ public class SensorController {
     @Autowired
     private SensorService sensorService;
 
+    @CrossOrigin
     @PostMapping("/save")
     public ResponseEntity<Sensor> SaveSensor(@RequestBody Sensor sensor) {
         try {
@@ -40,6 +42,7 @@ public class SensorController {
      * @param sensor
      * @return
      */
+    @CrossOrigin
     @PutMapping("/update/id")
     public ResponseEntity<Sensor> updateSensor(@RequestParam int idSensor, @RequestBody Sensor sensor) {
         try {
@@ -57,6 +60,7 @@ public class SensorController {
      * @param idSensor
      * @return
      */
+    @CrossOrigin
     @GetMapping("/get/id")
     public ResponseEntity<Sensor> getSensorByID(@RequestParam int idSensor) {
         try {
@@ -72,6 +76,7 @@ public class SensorController {
      * @param ref
      * @return
      */
+    @CrossOrigin
     @GetMapping("/get/sensors/category/reference")
     public ResponseEntity<List<Sensor>> getSensorSensorsByID(@RequestParam String ref) {
         try {
@@ -102,6 +107,7 @@ public class SensorController {
      * @param idSensor
      * @return
      */
+    @CrossOrigin
     @DeleteMapping("/delete/id")
     public ResponseEntity<Sensor> deleteSensorByID(@RequestParam int idSensor) {
         try {
@@ -116,12 +122,23 @@ public class SensorController {
      *
      * @return
      */
+    @CrossOrigin
     @DeleteMapping("/delete/all")
     public ResponseEntity<List<Sensor>> deleteAllSensors() {
         try {
             List<Sensor> sensor = sensorService.deleteAllSensors();
             return new ResponseEntity<>(sensor, HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/search/farms")
+    public ResponseEntity<List<Sensor>> search(@RequestParam int idSensor, @RequestParam int idFarm, @RequestParam Date date) {
+        try {
+            return new ResponseEntity<>(sensorService.search(idSensor, idFarm, date), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

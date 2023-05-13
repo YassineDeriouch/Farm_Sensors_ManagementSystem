@@ -144,6 +144,4 @@ public class FarmService {
             throw new EntityNotFoundException("NO farm has been found !");
         }
     }
-
-
 }

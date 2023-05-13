@@ -146,4 +146,14 @@ public class SensorService {
             throw new EntityNotFoundException("NO sensor has been found !");
         }
     }
+
+    @Transactional
+    public List<Sensor> search(int idFarm, int idSensor, Date timestamp) {
+       /* Sensor sensor = new Sensor();
+        int idF = sensor.getFarm().getIdFarm();
+        int idS = sensor.getIdSensor();
+        Date date = sensor.getTimestamp();*/
+        List<Sensor> sensorList = sensorRepository.findAllByFarm_IdSensorAndIdFarmAndTimestamp(idSensor, idFarm, timestamp);
+        return sensorList.stream().map(element -> modelMapper.map(element, Sensor.class)).collect(Collectors.toList());
+    }
 }

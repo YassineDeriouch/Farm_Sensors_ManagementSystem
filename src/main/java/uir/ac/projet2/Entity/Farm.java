@@ -42,7 +42,8 @@ public class Farm {
     private String Description;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idFarm")
+    //@JoinColumn(name = "idFarm")
+    @JoinTable(name = "farm_sensor")
     private List<Sensor> sensorList;
 
     @JsonIgnore
