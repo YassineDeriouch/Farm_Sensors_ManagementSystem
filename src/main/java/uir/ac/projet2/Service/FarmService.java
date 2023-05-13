@@ -44,7 +44,7 @@ public class FarmService {
         farm.setLatitude(farm.getLatitude());
         farm.setLongitude(farm.getLongitude());
         farm.setUserFarms(farm.getUserFarms());
-        //farm.setSensorList(farm.getSensorList());
+        farm.setSensorList(farm.getSensorList());
         Farm savedFarm = farmRepository.save(farm);
         return modelMapper.map(savedFarm, Farm.class);
     }
@@ -109,20 +109,6 @@ public class FarmService {
         else
             throw new EntityNotFoundException("Farm name = " + Name + " not found");
     }
-
-    /*@Transactional
-    public Farm getFarmSensors(int id)throws EntityNotFoundException{
-        Optional<Farm> farmOptional = farmRepository.findById(id);
-        if(farmOptional.isPresent()){
-            List<Sensor> farmList =farmOptional.get().getSensorList();
-            if(!farmList.isEmpty())
-                return (Farm) farmList.stream().map(element -> Farm.class).collect(Collectors.toList());
-            else
-                return null;
-        }else{
-            throw new EntityNotFoundException("Farm with id : "+id+" not found !");
-        }
-    }*/
 
     /**
      * DELETE FARM BY ID

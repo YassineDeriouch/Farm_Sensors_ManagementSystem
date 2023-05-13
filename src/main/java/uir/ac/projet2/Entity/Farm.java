@@ -41,7 +41,6 @@ public class Farm {
     @Column(name = "description")
     private String Description;
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "idFarm")
     private List<Sensor> sensorList;

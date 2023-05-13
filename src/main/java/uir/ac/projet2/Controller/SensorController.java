@@ -86,6 +86,7 @@ public class SensorController {
      * GET ALL SENSOR
      * @return
      */
+    @CrossOrigin("*")
     @GetMapping("/get/all")
     public ResponseEntity<List<Sensor>> getAllSensors() {
         try {

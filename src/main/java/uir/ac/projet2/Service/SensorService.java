@@ -14,6 +14,7 @@ import uir.ac.projet2.Repository.SensorRepository;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,7 +68,7 @@ public class SensorService {
     }
 
     /**
-     * GET ALL FARMS
+     * GET ALL Sensors
      *
      * @return
      */
