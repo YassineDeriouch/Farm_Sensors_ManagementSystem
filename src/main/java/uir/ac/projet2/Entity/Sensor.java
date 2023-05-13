@@ -41,8 +41,10 @@ public class Sensor {
     @Column(name = "value")
     private double Value;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     //@JoinColumn(name = "idFarm")
+    @JoinTable(name = "farm_sensor"
+            , joinColumns = @JoinColumn(name = "idSensor"), inverseJoinColumns = @JoinColumn(name = "idFarm"))
     private Farm farm;
 
     @ManyToOne

@@ -134,10 +134,10 @@ public class SensorController {
     }
 
     @CrossOrigin
-    @GetMapping("/search/farms")
-    public ResponseEntity<List<Sensor>> search(@RequestParam int idSensor, @RequestParam int idFarm, @RequestParam Date date) {
+    @GetMapping("/search/farms/sensors")
+    public ResponseEntity<List<Sensor>> searchByName(@RequestParam String nomSensor, @RequestParam int idFarm, @RequestParam Date date) {
         try {
-            return new ResponseEntity<>(sensorService.search(idSensor, idFarm, date), HttpStatus.OK);
+            return new ResponseEntity<>(sensorService.searchBySensorName(nomSensor, idFarm, date), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

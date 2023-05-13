@@ -167,12 +167,8 @@ public class SensorService {
     }
 
     @Transactional
-    public List<Sensor> search(int idFarm, int idSensor, Date timestamp) {
-       /* Sensor sensor = new Sensor();
-        int idF = sensor.getFarm().getIdFarm();
-        int idS = sensor.getIdSensor();
-        Date date = sensor.getTimestamp();*/
-        List<Sensor> sensorList = sensorRepository.findAllByFarm_IdSensorAndIdFarmAndTimestamp(idSensor, idFarm, timestamp);
+    public List<Sensor> searchBySensorName(String sensorName, int idFarm, Date time) {
+        List<Sensor> sensorList = sensorRepository.findAllByFarm_nomSensorAndIdFarmAndTimestamp(sensorName, idFarm, time);
         return sensorList.stream().map(element -> modelMapper.map(element, Sensor.class)).collect(Collectors.toList());
     }
 }
