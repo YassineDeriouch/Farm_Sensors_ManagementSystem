@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import uir.ac.projet2.Entity.Farm;
 
+import java.util.List;
+
 @Repository
 public interface FarmRepository extends JpaRepository<Farm, Integer> {
 

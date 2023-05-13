@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uir.ac.projet2.Entity.Farm;
+import uir.ac.projet2.Entity.FarmDTO;
 import uir.ac.projet2.Entity.Sensor;
 import uir.ac.projet2.Repository.FarmRepository;
 
@@ -168,4 +169,13 @@ public class FarmService {
             throw new EntityNotFoundException("NO farm has been found !");
         }
     }
+
+    public List<FarmDTO> getFarmsWithSensorNames() {
+        List<Farm> farms = farmRepository.findAll();
+        List<FarmDTO> farmDTOs = farms.stream()
+                .map(FarmDTO::new)
+                .collect(Collectors.toList());
+        return farmDTOs;
+    }
+
 }

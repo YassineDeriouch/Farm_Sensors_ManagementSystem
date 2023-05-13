@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uir.ac.projet2.Entity.Farm;
+import uir.ac.projet2.Entity.FarmDTO;
 import uir.ac.projet2.Entity.Sensor;
 import uir.ac.projet2.Service.FarmService;
 import uir.ac.projet2.Service.SensorService;
@@ -166,6 +167,12 @@ public class FarmController {
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/farms-with-sensors")
+    public ResponseEntity<List<FarmDTO>> getFarmsWithSensorNames() {
+        List<FarmDTO> farmDTOs = farmService.getFarmsWithSensorNames();
+        return ResponseEntity.ok(farmDTOs);
     }
 
 }
