@@ -13,7 +13,5 @@ import java.util.Optional;
 public interface SensorRepository extends JpaRepository<Sensor, Integer> {
     @Query(value = "SELECT s FROM Sensor s WHERE s.sensorCategory.Reference =:Reference", nativeQuery = false)
     List<Sensor> findSensorBySensorCategory_Reference(String Reference);
-
-    @Query(value = "select Name from Sensor  ")
-    List<String> findAllSensorsNames();
+    
 }
