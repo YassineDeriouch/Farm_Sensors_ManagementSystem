@@ -49,6 +49,30 @@ public class FarmService {
         return modelMapper.map(savedFarm, Farm.class);
     }
 
+    //Add Farm to Sensor
+    @Autowired
+    private SensorService sensorService;
+    @Transactional
+    public Farm addFarmToSensor(int idFarm, int idSensor) throws EntityNotFoundException {
+        Optional<Farm> farmOptional = farmRepository.findById(idFarm);
+        if (farmOptional.isPresent()) {
+            //Optional.ofNullable() : Returns an Optional describing the specified value, if non-null, otherwise returns an empty Optional.
+            Optional<Sensor> sensorOptional = Optional.ofNullable(sensorService.getSensorByID(idSensor));
+            if (sensorOptional.isPresent()) {
+                Farm farm = farmOptional.get();
+                Sensor sensor = sensorOptional.get();
+                farm.getSensorList().add(sensor);
+                sensor.setFarm(farm);
+                Farm savedFarm = farmRepository.save(farm);
+                return modelMapper.map(savedFarm, Farm.class);
+            } else {
+                throw new EntityNotFoundException("Sensor id= " + idSensor + " not found");
+            }
+        } else {
+            throw new EntityNotFoundException("Farm id= " + idFarm + " not found");
+        }
+    }
+
     /**
      * UPDATE FARM
      *

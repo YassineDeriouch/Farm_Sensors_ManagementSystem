@@ -41,14 +41,18 @@ public class Sensor {
     @Column(name = "value")
     private double Value;
 
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "idFarm")
+    //@JoinColumn(name = "idFarm")
     private Farm farm;
 
     @ManyToOne
     @JoinColumn(name = "idCateg")
     private SensorCategory sensorCategory;
+
+    @Override
+    public String toString() {
+        return "Sensor(id=" + idSensor + ", Name=" + sensorName + ", Description=" + farm.getDescription() + ")";
+    }
 
 
 }

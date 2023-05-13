@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uir.ac.projet2.Entity.Farm;
+import uir.ac.projet2.Entity.Sensor;
 import uir.ac.projet2.Service.FarmService;
+import uir.ac.projet2.Service.SensorService;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class FarmController {
 
     @Autowired
     private FarmService farmService;
+
+    @Autowired
+    private SensorService sensorService;
 
     /**
      * SAVE FARM
@@ -147,5 +152,20 @@ public class FarmController {
         }
     }
 
+    /**
+     * ADD SENSOR TO FARM
+     *
+     * @param idFarm
+     * @param idSensor
+     * @return
+     */
+    @PutMapping("/affect/to/sensor")
+    public ResponseEntity<Farm> addSensorToFarm(@RequestParam int idFarm, @RequestParam int idSensor) {
+        try {
+            return new ResponseEntity<>(farmService.addFarmToSensor(idFarm, idSensor), HttpStatus.OK);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

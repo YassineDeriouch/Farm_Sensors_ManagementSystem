@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uir.ac.projet2.Entity.Farm;
 import uir.ac.projet2.Entity.Sensor;
 import uir.ac.projet2.Entity.Sensor;
 import uir.ac.projet2.Entity.SensorCategory;
@@ -43,8 +44,26 @@ public class SensorService {
         sensor.setTimestamp(date);
 
         sensor.setSensorCategory(sensor.getSensorCategory());
+
+        System.out.println("sensor.getSensorCategory() : " + sensor.getSensorCategory());
+        sensor.setFarm(sensor.getFarm());
+        System.out.println("sensor.getFarm() : " + sensor.getFarm());
+        Farm f= sensor.getFarm();
+        List<Sensor> sensorList = f.getSensorList();
+        // Initialize sensorList property if it is null
+        if (sensorList == null) {
+            sensorList = new ArrayList<>();
+        }
+        sensorList.add(sensor);
+        f.setSensorList(sensorList);
+        sensorRepository.save(sensor);
+        try{
         Sensor savedSensor = sensorRepository.save(sensor);
-        return modelMapper.map(savedSensor, Sensor.class);
+        return modelMapper.map(savedSensor, Sensor.class);}
+        catch (Exception e){
+            System.out.println("Exception : " + e);
+            return null;
+        }
     }
 
     /**

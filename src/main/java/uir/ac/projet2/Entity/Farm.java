@@ -41,13 +41,19 @@ public class Farm {
     @Column(name = "description")
     private String Description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "idFarm")
-    @JoinTable(name = "farm_sensor")
+    @JsonIgnore
+    @OneToMany
+    @JoinTable(name = "farm_sensor"
+            , joinColumns = @JoinColumn(name = "idFarm"), inverseJoinColumns = @JoinColumn(name = "idSensor"))
     private List<Sensor> sensorList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "farm")
     private List<User_Farm_Link> userFarms;
+
+    @Override
+    public String toString() {
+        return "Farm(idFarm=" + idFarm + ", Address=" + Address + ", Area=" + Area + ", Name=" + Name + ", Longitude=" + Longitude + ", Latitude=" + Latitude + ", Description=" + Description + ", sensorCount=" + (sensorList != null ? sensorList.size() : 0) + ", userFarms=" + userFarms + ")";
+    }
 
 }
