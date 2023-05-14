@@ -63,7 +63,7 @@ public class FarmService {
                 Farm farm = farmOptional.get();
                 Sensor sensor = sensorOptional.get();
                 farm.getSensorList().add(sensor);
-                sensor.setFarm(farm);
+               // sensor.setFarm(farm);
                 Farm savedFarm = farmRepository.save(farm);
                 return modelMapper.map(savedFarm, Farm.class);
             } else {

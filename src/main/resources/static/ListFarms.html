@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Farms with Sensors</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <br>
+    <h1>Farms list </h1>
+    <br>
+    <button type="button" class="btn btn-success" onclick="location.href='saveFarm.html'" style="margin-bottom: 10px">
+        Add new farm
+    </button>
+
+    <table class="table table-striped table-bordered" id="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Area</th>
+            <th>Longitude</th>
+            <th>Latitude</th>
+            <th>Description</th>
+            <th>Sensors</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="farm-data">
+        <!-- Farm data will be populated here -->
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    // Retrieve data from API endpoint
+    fetch('http://localhost:8080/Farms/farms-with-sensors')
+        .then(response => response.json())
+        .then(data => {
+            // Populate table rows with farm data
+            const farmData = document.getElementById('farm-data');
+            data.forEach(farm => {
+                // Remove duplicates from sensorNames array
+                const uniqueSensorNames = [...new Set(farm.sensorNames)];
+
+                const row = `<tr>
+        <td id="farmId">${farm.idFarm}</td>
+        <td>${farm.name}</td>
+        <td>${farm.address}</td>
+        <td>${farm.area}</td>
+        <td>${farm.longitude}</td>
+        <td>${farm.latitude}</td>
+        <td>${farm.description}</td>
+        <td>${farm.sensorNames.map(sensorName => `${sensorName}<br>`).join('')}</td>
+
+        <td class="text-center" style="margin: auto">
+        <div class="btn-group" role="group" style="text-align: center">
+
+
+        <button type="button" class="btn btn-primary mr-1" onclick="getID(${farm.idFarm})">Assign to sensor</button>
+        <button type="button" class="btn btn-warning mr-1" onclick="updateFarm2(${farm.idFarm})">update</button>
+        <button type="button" class="btn btn-danger mr-1" onclick="deleteFarm(${farm.idFarm})">delete</button>
+        </div>
+        </td>
+      </tr>`;
+                farmData.innerHTML += row;
+            });
+        })
+        .catch(error => console.error(error));
+
+    function deleteFarm(farmId) {
+        console.log('farmId : ', farmId);
+        const xhr = new XMLHttpRequest();
+        xhr.open('DELETE', 'http://localhost:8080/Farms/delete/id?idFarm=' + farmId, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                console.log('Record deleted successfully');
+                location.reload();
+            } else {
+                console.log('Error deleting record');
+            }
+        };
+        xhr.send();
+    }
+
+    function getID(farmId) {
+        console.log("farmId : ", farmId);
+        window.location.href = "farmToSensor.html?farmId=" + encodeURIComponent(farmId);
+    }
+
+    /**
+     *
+     * @param farmId
+     */
+    function updateFarm2(farmId) {
+        console.log("Updating farm with id:", farmId);
+        // Retrieve data for the selected farm from the API
+        fetch(`http://localhost:8080/Farms/get/id?idFarm=${farmId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Redirect user to the update farm page with the pre-populated data
+                const queryString = `?idFarm=${encodeURIComponent(data.idFarm)}&name=${encodeURIComponent(data.name)}&address=${encodeURIComponent(data.address)}&area=${encodeURIComponent(data.area)}&longitude=${encodeURIComponent(data.longitude)}&latitude=${encodeURIComponent(data.latitude)}&description=${encodeURIComponent(data.description)}`;
+                window.location.href = "updateFarm.html" + queryString;
+            })
+            .catch(error => console.error(error));
+    }
+
+
+    function updateFarm(farmId) {
+        console.log("farmId : ", farmId);
+        const row = document.getElementById(`row-${farmId}`);
+
+        if (row) {
+            const name = row.cells[1].innerText;
+            const address = row.cells[2].innerText;
+            const area = row.cells[3].innerText;
+            const longitude = row.cells[4].innerText;
+            const latitude = row.cells[5].innerText;
+            const description = row.cells[6].innerText;
+
+            // Create an object to store the row data
+            const rowData = {
+                name,
+                address,
+                area,
+                longitude,
+                latitude,
+                description
+            };
+
+            const queryParams = new URLSearchParams(rowData).toString();
+            window.location.href = `updateFarm.html?farmId=${encodeURIComponent(farmId)}&${queryParams}`;
+        } else {
+            console.error(`Unable to find row with ID 'row-${farmId}'`);
+        }
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Assign farm to sensor</h1>
+    <form id="assignFarmForm">
+        <div class="form-group">
+            <label for="assignedFarm">Farm id :</label>
+            <input type="text" class="form-control" id="assignedFarm" name="assignedFarm" disabled>
+        </div>
+        <div class="form-group">
+            <label for="sensors">Sensor:</label>
+            <select class="form-control" id="sensors" name="sensors">
+                <option value="" selected disabled>Please select</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Assign</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var farmId = urlParams.get('farmId');
+    var sensorId;
+
+    document.getElementById("assignedFarm").value = farmId;
+
+    const assignFarmForm = document.getElementById('assignFarmForm');
+    const sensorsSelect = document.getElementById('sensors');
+
+    async function fetchAndPopulateSensors() {
+        try {
+            const response = await fetch('http://localhost:8080/Sensors/get/all');
+            const sensors = await response.json();
+
+            sensorsSelect.innerHTML = '';
+
+            sensors.forEach(sensor => {
+                const option = new Option(sensor.sensorName, sensor.idSensor);
+
+                sensorsSelect.add(option);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    fetchAndPopulateSensors();
+
+    function handleSelectedSensor(event) {
+        const selectedValue = event.target.value;
+        console.log("Selected sensor:", selectedValue);
+    }
+
+    sensorsSelect.addEventListener('change', handleSelectedSensor);
+
+    assignFarmForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        const formData = {
+            idFarm: assignFarmForm.assignedFarm.value,
+            sensor: assignFarmForm.sensors.value
+        };
+        farmId = formData.idFarm;
+        sensorId = formData.sensor;
+
+        try {
+            const response = await fetch('http://localhost:8080/Farms/affect/to/sensor?idFarm=' + farmId + '&idSensor=' + sensorId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idFarm: formData.idFarm,
+                    idSensor: formData.sensor
+                })
+
+            });
+
+            if (response.ok) {
+                console.log('Sensor assigned to farm successfully!');
+                alert('Sensor assigned to farm successfully!');
+                window.location.href = 'ListFarms.html';
+
+            } else {
+                console.error('Failed to assign sensor to farm:', response.status);
+                alert('Failed to assign sensor to farm:' + response.status.toString());
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>
+</body>
+</html>
