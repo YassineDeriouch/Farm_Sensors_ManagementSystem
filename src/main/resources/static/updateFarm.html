@@ -1,107 +1,121 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Update Farm</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Update Farm</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <body>
 
-<div class="container">
-  <br>
-  <h1>Update Farm</h1>
-  <form>
-    <div class="form-group">
-      <label for="farmId">Farm ID:</label>
-      <input type="number" class="form-control" id="farmId">
-    </div>
+  <!-- Ajouter name a l'input pour le récupérer ensuite de FormData -->
 
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" class="form-control" id="name">
-    </div>
+  <div class="container">
+    <br>
+    <h1>Update Farm</h1>
+    <form>
+      <div class="form-group">
+        <label for="farmId">Farm ID:</label>
+        <input type="number" class="form-control" id="farmId" name="farmId">
+      </div>
 
-    <div class="form-group">
-      <label for="address">Address:</label>
-      <input type="text" class="form-control" id="address">
-    </div>
-    <div class="form-group">
-      <label for="area">Area:</label>
-      <input type="text" class="form-control" id="area">
-    </div>
-    <div class="form-group">
-      <label for="longitude">Longitude:</label>
-      <input type="number" class="form-control" id="longitude">
-    </div>
-    <div class="form-group">
-      <label for="latitude">Latitude:</label>
-      <input type="number" class="form-control" id="latitude">
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea class="form-control" id="description"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Update Farm</button>
-  </form>
-</div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name">
+      </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" class="form-control" id="address" name="address">
+      </div>
 
-<script>
-  // Extract query parameters from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const farmId = urlParams.get('idFarm');
-  const name = urlParams.get('name');
-  const address = urlParams.get('address');
-  const area = urlParams.get('area');
-  const longitude = urlParams.get('longitude');
-  const latitude = urlParams.get('latitude');
-  const description = urlParams.get('description');
+      <div class="form-group">
+        <label for="area">Area:</label>
+        <input type="text" class="form-control" id="area" name="area">
+      </div>
 
-  document.getElementById("farmId").value = farmId;
+      <div class="form-group">
+        <label for="longitude">Longitude:</label>
+        <input type="number" class="form-control" id="longitude" name="longitude">
+      </div>
 
-  // Populate form fields with row data
-  document.getElementById('name').value = name;
-  document.getElementById('address').value = address;
-  document.getElementById('area').value = area;
-  document.getElementById('longitude').value = longitude;
-  document.getElementById('latitude').value = latitude;
-  document.getElementById('description').value = description;
+      <div class="form-group">
+        <label for="latitude">Latitude:</label>
+        <input type="number" class="form-control" id="latitude" name="latitude">
+      </div>
 
-  // Handle form submission
-  const form = document.querySelector('form');
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="description"></textarea>
+      </div>
 
-    // Get form field values
-    const formData = new FormData(event.target);
-    const name = formData.get('name');
-    const address = formData.get('address');
-    const area = formData.get('area');
-    const longitude = formData.get('longitude');
-    const latitude = formData.get('latitude');
-    const description = formData.get('description');
+      <button type="submit" class="btn btn-primary">Update Farm</button>
+    </form>
 
-    // Send updated data to API endpoint
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', `http://localhost:8080/Farms/update/id?idFarm=${farmId}`, true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        console.log('Record updated successfully');
-        alert('Farm updated successfully');
-        window.location.href = 'ListFarms.html';
-      } else {
-        console.log('Error updating record');
-        alert('Error updating record');
-      }
-    };
-    const data = JSON.stringify({name, address, area, longitude, latitude, description});
-    xhr.send(data);
-  });
-</script>
+  </div>
 
-</body>
-</html>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    // Extract query parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const farmId = urlParams.get('idFarm');
+    const name = urlParams.get('name');
+    const address = urlParams.get('address');
+    const area = urlParams.get('area');
+    const longitude = urlParams.get('longitude');
+    const latitude = urlParams.get('latitude');
+    const description = urlParams.get('description');
+
+    // document.getElementById("farmId").value = farmId; sert a faire passer l'id de la ferme dans le formulaire
+    document.getElementById("farmId").value = farmId;
+    console.log("ID FARM --------->"+farmId);
+
+    //document.getElementById('name').value = name; sert a faire passer le nom de la ferme dans le formulaire
+    // Populate form fields with row data
+    document.getElementById('name').value = name;
+    console.log("NAME --------->"+name);
+    document.getElementById('address').value = address;
+    console.log("ADDRESS --------->"+address);
+    document.getElementById('area').value = area;
+    document.getElementById('longitude').value = longitude;
+    document.getElementById('latitude').value = latitude;
+    document.getElementById('description').value = description;
+
+    // Handle form submission
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Get form field values
+      const formData = new FormData(event.target);
+      const name = formData.get('name');
+      console.log("NAME Passed--------->"+name);
+      const address = formData.get('address');
+      const area = formData.get('area');
+      const longitude = formData.get('longitude');
+      const latitude = formData.get('latitude');
+      const description = formData.get('description');
+
+      // Send updated data to API endpoint
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', `http://localhost:8080/Farms/update/id?idFarm=${farmId}`, true);
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          console.log('Record updated successfully');
+          alert('Farm updated successfully');
+          window.location.href = 'ListFarms.html';
+        } else {
+          console.log('Error updating record');
+          alert('Error updating record');
+        }
+      };
+      const data = JSON.stringify({name, address, area, longitude, latitude, description});
+      xhr.send(data);
+    });
+  </script>
+
+  </body>
+  </html>

@@ -142,4 +142,5 @@ public class SensorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 }

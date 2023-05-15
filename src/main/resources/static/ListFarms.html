@@ -9,12 +9,18 @@
 
 <div class="container">
     <br>
+    <div class="jumbotron text-center">
     <h1>Farms list </h1>
+    </div>
     <br>
+    <div class="d-flex justify-content-between">
     <button type="button" class="btn btn-success" onclick="location.href='saveFarm.html'" style="margin-bottom: 10px">
         Add new farm
     </button>
-
+    <button type="button" class="btn btn-success" onclick="location.href='datasetExplorer.html'" style="margin-bottom: 10px">
+        Dataset explorer
+    </button>
+    </div>
     <table class="table table-striped table-bordered" id="table">
         <thead class="thead-dark">
         <tr>
@@ -64,7 +70,7 @@
 
 
         <button type="button" class="btn btn-primary mr-1" onclick="getID(${farm.idFarm})">Assign to sensor</button>
-        <button type="button" class="btn btn-warning mr-1" onclick="updateFarm2(${farm.idFarm})">update</button>
+        <button type="button" class="btn btn-success" onclick="updateFarm2(${farm.idFarm})">update</button>
         <button type="button" class="btn btn-danger mr-1" onclick="deleteFarm(${farm.idFarm})">delete</button>
         </div>
         </td>
