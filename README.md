@@ -1,7 +1,6 @@
 # Farms Management System
-Small web app based on RESTful API to manage farms, users, sensors, and sensors categories. 
-All CRUD operations have been implemented for all entities, but only Farm CRUD has been implemented on the client side using Html, CSS, bootstrap, and javascript.
-The API can be consumed by any client-side type ( web, mobile ...)
+Small web app based on REST API to manage farms, users, sensors, and sensors categories. 
+All CRUD operations have been implemented in the backend but consumed only Farm CRUD on the client side.
 
 ## Backend technologies
 - java: Spring boot 
